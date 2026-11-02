@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# StudioSpace
 
-## Getting Started
+**Live site:** https://LIVE-URL-PENDING
 
-First, run the development server:
+StudioSpace is a peer-to-peer marketplace where creators book photo studios, film stages, podcast lounges, music suites and art workshops by the hour, and hosts list their own spaces.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Hero slider (Swiper) with three scenes, six featured studios pulled live from MongoDB, and category cards that open Explore with the category pre-selected.
+- Email and password registration with server-enforced password rules, login with an HTTPOnly JWT cookie, and Google sign-in.
+- Full studio CRUD: add, update and delete listings, with an image upload to imgbb and confirmation modals before deleting.
+- Booking flow with double-booking prevention: a slot that overlaps a confirmed booking is rejected, and the check runs again when the host confirms.
+- Hosts can confirm, cancel or complete bookings; guests see status badges, can cancel pending bookings and download a PDF receipt.
+- Light and dark themes, skeleton loaders, empty states, Sonner toasts and custom modals (no browser alerts), and a custom 404 page.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Layer | Technology |
+| --- | --- |
+| Client | Next.js (App Router), TypeScript, Tailwind CSS, Swiper, Sonner, next-themes, jsPDF |
+| Server | Express, TypeScript, MongoDB (official driver), JWT in HTTPOnly cookies, bcrypt |
+| Hosting | Vercel for both apps, MongoDB Atlas for data |
 
-## Learn More
+Server repository: https://github.com/Amena-Begum/studiospace-server
 
-To learn more about Next.js, take a look at the following resources:
+## Local setup
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone and start the server (see its README): `npm install`, copy `.env.example` to `.env`, set `MONGODB_URI`, `JWT_SECRET` and `SEED_PASSWORD`, then `npm run seed` and `npm run dev` (runs on port 5000).
+2. In this repo: `npm install`, copy `.env.example` to `.env.local`, then `npm run dev` and open http://localhost:3000.
+3. The browser only calls `/api/*` on the client origin; `next.config.ts` forwards that to `API_URL`, which keeps the session cookie first-party.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Examiner test accounts
 
-## Deploy on Vercel
+| Role | Email | Password |
+| --- | --- | --- |
+| Guest (books studios) | jun.guest@studiospace.app | Brass-Lantern-4721! |
+| Host (owns demo listings) | mira.host@studiospace.app | Brass-Lantern-4721! |
+| Second host | teo.host@studiospace.app | Brass-Lantern-4721! |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Tip: log in as the guest, request a booking, then log in as the host to confirm it.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Photo credits
+
+Studio photographs come from Wikimedia Commons under the licences shown. The same list opens from the site footer.
+
+- [Duly Noted Studio Outtake.jpg](https://commons.wikimedia.org/wiki/File:Duly_Noted_Studio_Outtake.jpg) by Rj Dollen from Denver, USA, CC BY 2.0
+- [2018-Pulitzer-Prizes-photo-studio.jpg](https://commons.wikimedia.org/wiki/File:2018-Pulitzer-Prizes-photo-studio.jpg) by Fuzheado, CC0
+- [Ease Studio's "South Side Park", a decor for photoshoots 3.jpg](https://commons.wikimedia.org/wiki/File:Ease_Studio%27s_%22South_Side_Park%22,_a_decor_for_photoshoots_3.jpg) by Syced, CC0
+- [Ease Studio's "South Side Park", a decor for photoshoots 6.jpg](https://commons.wikimedia.org/wiki/File:Ease_Studio%27s_%22South_Side_Park%22,_a_decor_for_photoshoots_6.jpg) by Syced, CC0
+- [Channel ATV Green Screen Studio.jpg](https://commons.wikimedia.org/wiki/File:Channel_ATV_Green_Screen_Studio.jpg) by Allen Harriet Media, CC BY-SA 4.0
+- [MedienwerkstattGreenbox.JPG](https://commons.wikimedia.org/wiki/File:MedienwerkstattGreenbox.JPG) by Sandra Becker, CC BY-SA 4.0
+- [SPNN Podcast room.jpg](https://commons.wikimedia.org/wiki/File:SPNN_Podcast_room.jpg) by Myotus, CC BY 4.0
+- [Podcast Studio.jpg](https://commons.wikimedia.org/wiki/File:Podcast_Studio.jpg) by Ajcosta, CC BY-SA 4.0
+- [ARC Studio Control Room (rear view).jpg](https://commons.wikimedia.org/wiki/File:ARC_Studio_Control_Room_(rear_view).jpg) by Marco Tucconi, CC BY-SA 4.0
+- [MUSIC FOR MUSIC STUDIO.jpg](https://commons.wikimedia.org/wiki/File:MUSIC_FOR_MUSIC_STUDIO.jpg) by Mfmbackoffice, CC BY 4.0
+- [Ann Gollifer's studio.jpg](https://commons.wikimedia.org/wiki/File:Ann_Gollifer%27s_studio.jpg) by Ann Gollifer, CC BY-SA 4.0
