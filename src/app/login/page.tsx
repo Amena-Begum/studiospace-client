@@ -9,13 +9,14 @@ import GoogleButton from "@/components/GoogleButton";
 import Modal from "@/components/Modal";
 import { PageSpinner } from "@/components/Skeletons";
 import { useAuth } from "@/context/AuthContext";
+import { safeNext } from "@/lib/returnTo";
 
 function LoginForm() {
   const { user, loading, login } = useAuth();
   const router = useRouter();
   const params = useSearchParams();
   const next = params.get("next");
-  const dest = next && next.startsWith("/") && !next.startsWith("//") ? next : "/";
+  const dest = safeNext(next);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
@@ -80,7 +81,7 @@ function LoginForm() {
         </div>
         <GoogleButton onSuccess={() => router.replace(dest)} />
         <p className="mt-6 text-center text-sm text-muted">
-          New to StudioSpace? <Link href="/register" className="font-bold text-accent underline underline-offset-4">Create an account</Link>
+          New to StudioSpace? <Link href={dest === "/" ? "/register" : `/register?next=${encodeURIComponent(dest)}`} className="font-bold text-accent underline underline-offset-4">Create an account</Link>
         </p>
       </div>
       <Modal open={forgot} onClose={() => setForgot(false)} title="Forgot your password?">

@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
+import { authHref } from "@/lib/returnTo";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 
@@ -57,6 +58,12 @@ export default function Navbar() {
       history.replaceState(null, "", "/");
       setHash("");
     }
+  };
+
+  const toAuth = (e: React.MouseEvent, base: "/login" | "/register") => {
+    e.preventDefault();
+    setOpen(false);
+    router.push(authHref(base));
   };
 
   const onLogout = async () => {
@@ -142,8 +149,8 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="hidden items-center gap-2 sm:flex">
-              <Link href="/login" className="btn btn-ghost !px-5 !py-2.5">Login</Link>
-              <Link href="/register" className="btn btn-primary !px-5 !py-2.5">Register</Link>
+              <Link href="/login" onClick={(e) => toAuth(e, "/login")} className="btn btn-ghost !px-5 !py-2.5">Login</Link>
+              <Link href="/register" onClick={(e) => toAuth(e, "/register")} className="btn btn-primary !px-5 !py-2.5">Register</Link>
             </div>
           )}
           <button type="button" className="grid h-10 w-10 place-items-center rounded-full border border-line bg-surface lg:hidden" onClick={() => setOpen((o) => !o)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
@@ -165,8 +172,8 @@ export default function Navbar() {
           </ul>
           {!loading && !user && (
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <Link href="/login" className="btn btn-ghost">Login</Link>
-              <Link href="/register" className="btn btn-primary">Register</Link>
+              <Link href="/login" onClick={(e) => toAuth(e, "/login")} className="btn btn-ghost">Login</Link>
+              <Link href="/register" onClick={(e) => toAuth(e, "/register")} className="btn btn-primary">Register</Link>
             </div>
           )}
         </nav>

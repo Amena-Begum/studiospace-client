@@ -2,11 +2,13 @@
 
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import { toast } from "sonner";
 import GoogleButton from "@/components/GoogleButton";
+import { PageSpinner } from "@/components/Skeletons";
 import { useAuth } from "@/context/AuthContext";
+import { safeNext } from "@/lib/returnTo";
 
 const rules = [
   { label: "An uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
@@ -14,9 +16,11 @@ const rules = [
   { label: "At least 6 characters", test: (p: string) => p.length >= 6 },
 ];
 
-export default function RegisterPage() {
+function RegisterForm() {
   const { register } = useAuth();
   const router = useRouter();
+  const dest = safeNext(useSearchParams().get("next"));
+  const loginHref = dest === "/" ? "/login" : `/login?next=${encodeURIComponent(dest)}`;
   const [form, setForm] = useState({ name: "", email: "", photoURL: "", password: "" });
   const [show, setShow] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -38,7 +42,7 @@ export default function RegisterPage() {
     try {
       await register(form);
       toast.success("Account created. Please log in.");
-      router.push("/login");
+      router.push(loginHref);
     } catch (err) {
       fail(err instanceof Error ? err.message : "Registration failed.");
       setBusy(false);
@@ -93,11 +97,19 @@ export default function RegisterPage() {
         <div className="my-6 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted">
           <span className="h-px flex-1 bg-line" /> or <span className="h-px flex-1 bg-line" />
         </div>
-        <GoogleButton onSuccess={() => router.replace("/")} />
+        <GoogleButton onSuccess={() => router.replace(dest)} />
         <p className="mt-6 text-center text-sm text-muted">
-          Already registered? <Link href="/login" className="font-bold text-accent underline underline-offset-4">Login</Link>
+          Already registered? <Link href={loginHref} className="font-bold text-accent underline underline-offset-4">Login</Link>
         </p>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<PageSpinner />}>
+      <RegisterForm />
+    </Suspense>
   );
 }
