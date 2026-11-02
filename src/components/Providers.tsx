@@ -7,7 +7,7 @@ import { AuthProvider } from "@/context/AuthContext";
 
 function ThemedToaster() {
   const { resolvedTheme } = useTheme();
-  return <Toaster position="top-right" richColors closeButton theme={resolvedTheme === "dark" ? "dark" : "light"} />;
+  return <Toaster position="bottom-right" richColors closeButton theme={resolvedTheme === "dark" ? "dark" : "light"} />;
 }
 
 export default function Providers({ children }: { children: React.ReactNode }) {
