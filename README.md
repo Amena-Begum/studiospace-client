@@ -1,6 +1,6 @@
 # StudioSpace
 
-**Live site:** https://LIVE-URL-PENDING
+**Live site:** https://studiospace-client-psi.vercel.app
 
 StudioSpace is a peer-to-peer marketplace where creators book photo studios, film stages, podcast lounges, music suites and art workshops by the hour, and hosts list their own spaces.
 
@@ -21,7 +21,7 @@ StudioSpace is a peer-to-peer marketplace where creators book photo studios, fil
 | Server | Express, TypeScript, MongoDB (official driver), JWT in HTTPOnly cookies, bcrypt |
 | Hosting | Vercel for both apps, MongoDB Atlas for data |
 
-Server repository: https://github.com/Amena-Begum/studiospace-server
+Server repository: https://github.com/Amena-Begum/studiospace-server (live API: https://studiospace-server-virid.vercel.app)
 
 ## Local setup
 
