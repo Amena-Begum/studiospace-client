@@ -50,8 +50,8 @@ export default function Hero() {
       <Swiper
         modules={[Autoplay, EffectFade, Pagination, A11y]}
         effect="fade"
+        fadeEffect={{ crossFade: true }}
         loop
-        autoHeight
         autoplay={{ delay: 6500, disableOnInteraction: false, pauseOnMouseEnter: true }}
         onSwiper={setSwiper}
         onSlideChange={(s) => setActive(s.realIndex)}
@@ -66,7 +66,7 @@ export default function Hero() {
                 <span className="h-px flex-1 bg-line" />
                 <span className="hidden sm:inline">{s.kicker}</span>
               </div>
-              <h1 className="mt-6 max-w-5xl font-display text-[clamp(2.35rem,6.4vw,5.4rem)] font-semibold leading-[1.02] tracking-[-0.03em]">{s.title}</h1>
+              <h1 className="mt-6 min-h-[3.1em] max-w-5xl sm:min-h-0 font-display text-[clamp(2.35rem,6.4vw,5.4rem)] font-semibold leading-[1.02] tracking-[-0.03em]">{s.title}</h1>
 
               <div className="relative mt-8 overflow-hidden rounded-[1.6rem] border border-line bg-surface2 shadow-[var(--shadow)] grain">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
