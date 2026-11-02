@@ -51,6 +51,7 @@ export default function Hero() {
         modules={[Autoplay, EffectFade, Pagination, A11y]}
         effect="fade"
         loop
+        autoHeight
         autoplay={{ delay: 6500, disableOnInteraction: false, pauseOnMouseEnter: true }}
         onSwiper={setSwiper}
         onSlideChange={(s) => setActive(s.realIndex)}
@@ -69,9 +70,9 @@ export default function Hero() {
 
               <div className="relative mt-8 overflow-hidden rounded-[1.6rem] border border-line bg-surface2 shadow-[var(--shadow)] grain">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.image} alt={s.alt} className="h-[300px] w-full object-cover sm:h-[420px] lg:h-[500px]" fetchPriority={i === 0 ? "high" : "auto"} />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 flex flex-col gap-5 p-5 sm:flex-row sm:items-end sm:justify-between sm:p-8">
+                <img src={s.image} alt={s.alt} className="h-[260px] w-full object-cover sm:h-[420px] lg:h-[500px]" fetchPriority={i === 0 ? "high" : "auto"} />
+                <div className="absolute inset-0 hidden bg-gradient-to-t from-black/70 via-black/10 to-transparent sm:block" />
+                <div className="relative flex flex-col gap-5 bg-[#1a1713] p-5 sm:absolute sm:inset-x-0 sm:bottom-0 sm:flex-row sm:items-end sm:justify-between sm:bg-transparent sm:p-8">
                   <p className="max-w-md text-[1.02rem] leading-relaxed text-white">{s.text}</p>
                   <div className="flex flex-wrap gap-3">
                     <Link href="/studios" className="btn btn-primary">
