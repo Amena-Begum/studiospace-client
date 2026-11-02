@@ -1,0 +1,103 @@
+"use client";
+
+import { Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
+import GoogleButton from "@/components/GoogleButton";
+import { useAuth } from "@/context/AuthContext";
+
+const rules = [
+  { label: "An uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
+  { label: "A lowercase letter", test: (p: string) => /[a-z]/.test(p) },
+  { label: "At least 6 characters", test: (p: string) => p.length >= 6 },
+];
+
+export default function RegisterPage() {
+  const { register } = useAuth();
+  const router = useRouter();
+  const [form, setForm] = useState({ name: "", email: "", photoURL: "", password: "" });
+  const [show, setShow] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  const passwordErr = rules.find((r) => !r.test(form.password));
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    const fail = (m: string) => {
+      setError(m);
+      toast.error(m);
+    };
+    if (!form.name.trim() || !form.email.trim() || !form.photoURL.trim() || !form.password) return fail("Please fill in every field.");
+    if (!/^https?:\/\//i.test(form.photoURL.trim())) return fail("Photo URL must start with http:// or https://.");
+    if (passwordErr) return fail("Password needs an uppercase letter, a lowercase letter and at least 6 characters.");
+    setBusy(true);
+    try {
+      await register(form);
+      toast.success("Account created. Please log in.");
+      router.push("/login");
+    } catch (err) {
+      fail(err instanceof Error ? err.message : "Registration failed.");
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="mx-auto grid max-w-5xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1fr_1.1fr] md:py-20">
+      <div className="hidden md:block">
+        <p className="eyebrow">Join StudioSpace</p>
+        <h1 className="section-title mt-3">List a room. Book a room. Make something.</h1>
+        <p className="mt-4 max-w-sm leading-relaxed text-muted">One account lets you book studios by the hour and host your own space for other creators.</p>
+      </div>
+      <div className="card p-6 sm:p-9">
+        <h1 className="font-display text-3xl font-semibold tracking-tight md:hidden">Register</h1>
+        <h2 className="hidden font-display text-3xl font-semibold tracking-tight md:block">Create your account</h2>
+        <form onSubmit={submit} className="mt-6 space-y-4" noValidate>
+          <div>
+            <label htmlFor="name" className="label">Name</label>
+            <input id="name" autoComplete="name" className="field" value={form.name} onChange={set("name")} placeholder="Your full name" />
+          </div>
+          <div>
+            <label htmlFor="email" className="label">Email</label>
+            <input id="email" type="email" autoComplete="email" className="field" value={form.email} onChange={set("email")} placeholder="you@example.com" />
+          </div>
+          <div>
+            <label htmlFor="photo" className="label">Photo URL</label>
+            <input id="photo" type="url" className="field" value={form.photoURL} onChange={set("photoURL")} placeholder="https://…/your-photo.jpg" />
+          </div>
+          <div>
+            <label htmlFor="password" className="label">Password</label>
+            <div className="relative">
+              <input id="password" type={show ? "text" : "password"} autoComplete="new-password" className="field pr-11" value={form.password} onChange={set("password")} placeholder="Create a password" />
+              <button type="button" onClick={() => setShow((s) => !s)} aria-label={show ? "Hide password" : "Show password"} className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-muted hover:text-ink">
+                {show ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
+            </div>
+            <ul className="mt-2 space-y-1 text-[0.82rem]" aria-live="polite">
+              {rules.map((r) => {
+                const ok = r.test(form.password);
+                return (
+                  <li key={r.label} className={form.password ? (ok ? "text-tone" : "text-[#b42318] dark:text-[#ff8f84]") : "text-muted"}>
+                    {ok ? "✓" : "•"} {r.label}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          {error && <p role="alert" className="rounded-xl border border-[#b42318]/40 bg-[#b42318]/10 px-3.5 py-2.5 text-sm font-semibold text-[#b42318] dark:text-[#ff8f84]">{error}</p>}
+          <button type="submit" className="btn btn-primary w-full !py-3.5" disabled={busy}>{busy ? "Creating account…" : "Register"}</button>
+        </form>
+        <div className="my-6 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted">
+          <span className="h-px flex-1 bg-line" /> or <span className="h-px flex-1 bg-line" />
+        </div>
+        <GoogleButton onSuccess={() => router.replace("/")} />
+        <p className="mt-6 text-center text-sm text-muted">
+          Already registered? <Link href="/login" className="font-bold text-accent underline underline-offset-4">Login</Link>
+        </p>
+      </div>
+    </div>
+  );
+}
