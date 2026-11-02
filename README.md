@@ -43,7 +43,6 @@ Tip: log in as the guest, request a booking, then log in as the host to confirm 
 
 Studio photographs come from Wikimedia Commons under the licences shown. The same list opens from the site footer.
 
-- [Duly Noted Studio Outtake.jpg](https://commons.wikimedia.org/wiki/File:Duly_Noted_Studio_Outtake.jpg) by Rj Dollen from Denver, USA, CC BY 2.0
 - [2018-Pulitzer-Prizes-photo-studio.jpg](https://commons.wikimedia.org/wiki/File:2018-Pulitzer-Prizes-photo-studio.jpg) by Fuzheado, CC0
 - [Ease Studio's "South Side Park", a decor for photoshoots 3.jpg](https://commons.wikimedia.org/wiki/File:Ease_Studio%27s_%22South_Side_Park%22,_a_decor_for_photoshoots_3.jpg) by Syced, CC0
 - [Ease Studio's "South Side Park", a decor for photoshoots 6.jpg](https://commons.wikimedia.org/wiki/File:Ease_Studio%27s_%22South_Side_Park%22,_a_decor_for_photoshoots_6.jpg) by Syced, CC0

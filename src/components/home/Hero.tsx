@@ -15,10 +15,10 @@ const slides = [
   {
     scene: "Scene 01",
     kicker: "Photo studios",
-    title: "Find the wall that makes the shot.",
-    text: "Seamless cycs, styled sets and daylight lofts, booked by the hour and ready when you walk in.",
-    image: credits.cyc.url,
-    alt: "A white cyclorama wall lit by a strobe with an umbrella, where a photographer works with a model",
+    title: "Find the set that makes the shot.",
+    text: "Styled sets, daylight lofts and lit corners, booked by the hour and ready when you walk in.",
+    image: credits.carousel.url,
+    alt: "A whitewashed photo-shoot courtyard set with a vintage carousel and arched windows",
     cat: "Photo Studio",
   },
   {
