@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ApertureIcon } from "./Logo";
+import { MarkIcon } from "./Logo";
 
 interface Props {
   title: string;
@@ -12,7 +12,7 @@ interface Props {
 export default function EmptyState({ title, message, ctaLabel, ctaHref, onCta }: Props) {
   return (
     <div className="card mx-auto flex max-w-xl flex-col items-center px-6 py-12 text-center">
-      <span className="mb-4 text-muted"><ApertureIcon size={44} /></span>
+      <span className="mb-4 text-muted"><MarkIcon size={44} /></span>
       <h3 className="font-display text-2xl font-semibold tracking-tight">{title}</h3>
       <p className="mt-2 max-w-sm text-[0.95rem] leading-relaxed text-muted">{message}</p>
       {ctaHref ? (

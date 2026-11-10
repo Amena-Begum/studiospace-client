@@ -1,17 +1,17 @@
-import { ApertureIcon } from "./Logo";
+import { MarkIcon } from "./Logo";
 
 export function PageSpinner({ label = "Loading…" }: { label?: string }) {
   return (
     <div className="grid min-h-[55vh] place-items-center" role="status" aria-live="polite">
       <div className="flex flex-col items-center gap-4 text-ink">
-        <span className="inline-block animate-spin [animation-duration:2.4s]"><ApertureIcon size={52} /></span>
+        <span className="inline-block animate-spin [animation-duration:2.4s]"><MarkIcon size={52} /></span>
         <p className="font-display text-lg text-muted">{label}</p>
       </div>
     </div>
   );
 }
 
-export function StudioCardSkeleton() {
+export function EventCardSkeleton() {
   return (
     <div className="card overflow-hidden" aria-hidden>
       <div className="skeleton aspect-[4/3] !rounded-none" />
@@ -24,11 +24,11 @@ export function StudioCardSkeleton() {
   );
 }
 
-export function StudioGridSkeleton({ count = 6 }: { count?: number }) {
+export function EventGridSkeleton({ count = 6 }: { count?: number }) {
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="status" aria-label="Loading studios">
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" role="status" aria-label="Loading events">
       {Array.from({ length: count }).map((_, i) => (
-        <StudioCardSkeleton key={i} />
+        <EventCardSkeleton key={i} />
       ))}
     </div>
   );

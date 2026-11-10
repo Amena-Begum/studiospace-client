@@ -8,7 +8,7 @@ interface AuthState {
   user: User | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<User>;
-  googleLogin: (credential: string) => Promise<User>;
+  updateProfile: (input: { name: string; photoURL: string }) => Promise<User>;
   register: (input: { name: string; email: string; photoURL: string; password: string }) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -37,8 +37,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return d.user;
   }, []);
 
-  const googleLogin = useCallback(async (credential: string) => {
-    const d = await api<{ user: User }>("/auth/google", { method: "POST", body: { credential } });
+  const updateProfile = useCallback(async (input: { name: string; photoURL: string }) => {
+    const d = await api<{ user: User }>("/auth/profile", { method: "PUT", body: input });
     setUser(d.user);
     return d.user;
   }, []);
@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const value = useMemo(() => ({ user, loading, login, googleLogin, register, logout }), [user, loading, login, googleLogin, register, logout]);
+  const value = useMemo(() => ({ user, loading, login, updateProfile, register, logout }), [user, loading, login, updateProfile, register, logout]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

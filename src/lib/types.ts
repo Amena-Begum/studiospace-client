@@ -4,58 +4,29 @@ export interface User {
   photoURL: string;
 }
 
-export interface Review {
-  name: string;
-  rating: number;
-  comment: string;
-  date: string;
-}
-
-export interface Studio {
+export interface EventItem {
   _id: string;
   title: string;
-  category: string;
-  hourlyRate: number;
-  securityDeposit: number;
-  maxCapacity: number;
+  description: string;
+  eventType: string;
+  thumbnail: string;
   location: string;
-  imageUrl: string;
-  gallery?: string[];
-  amenities: string[];
-  overview: string;
-  rating: number;
-  reviews: Review[];
-  ownerEmail: string;
-  ownerName: string;
-  ownerPhoto?: string;
+  eventDate: string; // YYYY-MM-DD
+  creatorEmail: string;
+  creatorName: string;
   createdAt: string;
+  participants?: number;
 }
 
-export type BookingStatus = "Pending" | "Confirmed" | "Completed" | "Cancelled";
-
-export interface Booking {
+export interface JoinedEvent {
   _id: string;
-  studioId: string;
-  studioTitle: string;
-  studioImage: string;
-  studioLocation: string;
-  hostEmail: string;
-  userEmail: string;
-  userName: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  hours: number;
-  hourlyRate: number;
-  total: number;
-  securityDeposit: number;
-  status: BookingStatus;
-  createdAt: string;
+  eventId: string;
+  title: string;
+  eventType: string;
+  thumbnail: string;
+  location: string;
+  eventDate: string;
+  joinedAt: string;
 }
 
-export const CATEGORIES = ["Photo Studio", "Film Stage", "Podcast Lounge", "Music Suite", "Workshop"] as const;
-export const AMENITY_OPTIONS = [
-  "Infinity cyc wall", "Strobe kit", "Continuous lighting", "Green screen", "Acoustic treatment", "Soundproof booth",
-  "Mixing console", "Microphones", "Camera support", "Makeup station", "Changing room", "Props closet",
-  "Free Wi-Fi", "Parking", "Kitchenette", "Air conditioning", "Loading dock", "Work tables",
-];
+export const EVENT_TYPES = ["Cleanup", "Plantation", "Donation", "Food Drive", "Blood Donation", "Education", "Health Camp", "Other"] as const;
