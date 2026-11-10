@@ -1,8 +1,8 @@
-# StudioSpace
+# Mohalla
 
 **Live site:** https://studiospace-client-psi.vercel.app
 
-StudioSpace is a peer-to-peer marketplace where creators book photo studios, film stages, podcast lounges, music suites and art workshops by the hour, and hosts list their own spaces.
+Mohalla is a peer-to-peer marketplace where creators book photo studios, film stages, podcast lounges, music suites and art workshops by the hour, and hosts list their own spaces.
 
 ## Features
 
