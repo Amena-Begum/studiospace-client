@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import { toast } from "sonner";
-import GoogleButton from "@/components/GoogleButton";
 import { PageSpinner } from "@/components/Skeletons";
 import { useAuth } from "@/context/AuthContext";
 import { safeNext } from "@/lib/returnTo";
@@ -41,7 +40,7 @@ function RegisterForm() {
     setBusy(true);
     try {
       await register(form);
-      toast.success("Account created. Please log in.");
+      toast.success("Welcome to Mohalla! Your account is ready. Please log in.");
       router.push(loginHref);
     } catch (err) {
       fail(err instanceof Error ? err.message : "Registration failed.");
@@ -52,9 +51,9 @@ function RegisterForm() {
   return (
     <div className="mx-auto grid max-w-5xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1fr_1.1fr] md:py-20">
       <div className="hidden md:block">
-        <p className="eyebrow">Join StudioSpace</p>
-        <h1 className="section-title mt-3">List a room. Book a room. Make something.</h1>
-        <p className="mt-4 max-w-sm leading-relaxed text-muted">One account lets you book studios by the hour and host your own space for other creators.</p>
+        <p className="eyebrow">Join Mohalla</p>
+        <h1 className="section-title mt-3">Meet the neighbours who make things better.</h1>
+        <p className="mt-4 max-w-sm leading-relaxed text-muted">One account lets you create events, join the ones you care about and keep track of both.</p>
       </div>
       <div className="card p-6 sm:p-9">
         <h1 className="font-display text-3xl font-semibold tracking-tight md:hidden">Register</h1>
@@ -94,10 +93,6 @@ function RegisterForm() {
           {error && <p role="alert" className="rounded-xl border border-[#b42318]/40 bg-[#b42318]/10 px-3.5 py-2.5 text-sm font-semibold text-[#b42318] dark:text-[#ff8f84]">{error}</p>}
           <button type="submit" className="btn btn-primary w-full !py-3.5" disabled={busy}>{busy ? "Creating account…" : "Register"}</button>
         </form>
-        <div className="my-6 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted">
-          <span className="h-px flex-1 bg-line" /> or <span className="h-px flex-1 bg-line" />
-        </div>
-        <GoogleButton onSuccess={() => router.replace(dest)} />
         <p className="mt-6 text-center text-sm text-muted">
           Already registered? <Link href={loginHref} className="font-bold text-accent underline underline-offset-4">Login</Link>
         </p>

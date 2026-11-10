@@ -5,8 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { toast } from "sonner";
-import GoogleButton from "@/components/GoogleButton";
-import Modal from "@/components/Modal";
+import GithubButton from "@/components/GithubButton";
 import { PageSpinner } from "@/components/Skeletons";
 import { useAuth } from "@/context/AuthContext";
 import { safeNext } from "@/lib/returnTo";
@@ -22,7 +21,17 @@ function LoginForm() {
   const [show, setShow] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [forgot, setForgot] = useState(false);
+
+  useEffect(() => {
+    const code = params.get("error");
+    if (!code) return;
+    const messages: Record<string, string> = {
+      github_not_configured: "GitHub sign-in isn't switched on for this site yet. Please use email and password.",
+      github_no_email: "GitHub didn't share a verified email address, so we couldn't sign you in.",
+      github_failed: "GitHub sign-in didn't complete. Please try again.",
+    };
+    toast.error(messages[code] ?? "Sign-in failed. Please try again.");
+  }, [params]);
 
   useEffect(() => {
     if (!loading && user && !busy) router.replace(dest);
@@ -52,12 +61,12 @@ function LoginForm() {
     <div className="mx-auto grid max-w-5xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-[1fr_1.1fr] md:py-20">
       <div className="hidden md:block">
         <p className="eyebrow">Welcome back</p>
-        <h1 className="section-title mt-3">Your next booking is a few clicks away.</h1>
-        <p className="mt-4 max-w-sm leading-relaxed text-muted">Log in to manage your studio listings, confirm requests and see the sessions you have lined up.</p>
+        <h1 className="section-title mt-3">Your neighbours are waiting for you.</h1>
+        <p className="mt-4 max-w-sm leading-relaxed text-muted">Log in to create events, keep them up to date and see the events you have joined.</p>
       </div>
       <div className="card p-6 sm:p-9">
         <h1 className="font-display text-3xl font-semibold tracking-tight md:hidden">Login</h1>
-        <h2 className="hidden font-display text-3xl font-semibold tracking-tight md:block">Login to StudioSpace</h2>
+        <h2 className="hidden font-display text-3xl font-semibold tracking-tight md:block">Login to Mohalla</h2>
         <form onSubmit={submit} className="mt-6 space-y-4" noValidate>
           <div>
             <label htmlFor="email" className="label">Email</label>
@@ -71,7 +80,6 @@ function LoginForm() {
                 {show ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
-            <button type="button" onClick={() => setForgot(true)} className="mt-2 text-sm font-semibold text-accent underline underline-offset-4">Forgot Password?</button>
           </div>
           {error && <p role="alert" className="rounded-xl border border-[#b42318]/40 bg-[#b42318]/10 px-3.5 py-2.5 text-sm font-semibold text-[#b42318] dark:text-[#ff8f84]">{error}</p>}
           <button type="submit" className="btn btn-primary w-full !py-3.5" disabled={busy}>{busy ? "Logging in…" : "Login"}</button>
@@ -79,15 +87,11 @@ function LoginForm() {
         <div className="my-6 flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-muted">
           <span className="h-px flex-1 bg-line" /> or <span className="h-px flex-1 bg-line" />
         </div>
-        <GoogleButton onSuccess={() => router.replace(dest)} />
+        <GithubButton next={dest} />
         <p className="mt-6 text-center text-sm text-muted">
-          New to StudioSpace? <Link href={dest === "/" ? "/register" : `/register?next=${encodeURIComponent(dest)}`} className="font-bold text-accent underline underline-offset-4">Create an account</Link>
+          New to Mohalla? <Link href={dest === "/" ? "/register" : `/register?next=${encodeURIComponent(dest)}`} className="font-bold text-accent underline underline-offset-4">Register</Link>
         </p>
       </div>
-      <Modal open={forgot} onClose={() => setForgot(false)} title="Forgot your password?">
-        <p className="leading-relaxed text-muted">Password reset isn&apos;t available yet. If you can&apos;t sign in, try your password once more, or register with a different email address.</p>
-        <div className="mt-6 flex justify-end"><button type="button" className="btn btn-primary" onClick={() => setForgot(false)}>Got it</button></div>
-      </Modal>
     </div>
   );
 }
