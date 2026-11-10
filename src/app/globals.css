@@ -13,6 +13,8 @@
   --accent-ink: #fffaf3;
   --tone: #1f3a33;
   --tone-ink: #eaf2ee;
+  --foot: #1f3a33;
+  --foot-ink: #eaf2ee;
   --shadow: 0 1px 0 rgba(26, 23, 19, 0.04), 0 12px 32px -18px rgba(26, 23, 19, 0.35);
 }
 
@@ -27,6 +29,8 @@
   --accent-ink: #1a0d07;
   --tone: #8fc2ae;
   --tone-ink: #0f1c18;
+  --foot: #16261f;
+  --foot-ink: #e4efe9;
   --shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 14px 34px -16px rgba(0, 0, 0, 0.8);
 }
 
@@ -41,6 +45,8 @@
   --color-accentink: var(--accent-ink);
   --color-tone: var(--tone);
   --color-toneink: var(--tone-ink);
+  --color-foot: var(--foot);
+  --color-footink: var(--foot-ink);
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-sans: var(--font-manrope), system-ui, sans-serif;
 }
@@ -54,10 +60,6 @@ body {
   color: var(--ink);
   font-family: var(--font-manrope), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-}
-
-section[id] {
-  scroll-margin-top: 88px;
 }
 
 /* One heading style for every section title */
@@ -150,6 +152,3 @@ section[id] {
   html { scroll-behavior: auto; }
   .rise, .skeleton { animation: none; }
 }
-
-.swiper-pagination-bullet { background: var(--ink) !important; opacity: 0.3 !important; }
-.swiper-pagination-bullet-active { background: var(--accent) !important; opacity: 1 !important; }

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 import Footer from "@/components/Footer";
-import HashScroller from "@/components/HashScroller";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 import "./globals.css";
@@ -10,8 +9,8 @@ const fraunces = Fraunces({ variable: "--font-fraunces", subsets: ["latin"], axe
 const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: { default: "StudioSpace — Book creative studios by the hour", template: "%s · StudioSpace" },
-  description: "StudioSpace is a peer-to-peer marketplace for photo studios, film stages, podcast lounges, music suites and art workshops.",
+  title: { default: "Mohalla — Community events for your neighbourhood", template: "%s · Mohalla" },
+  description: "Mohalla is a community platform where neighbours create, join and track social service events such as clothes drives, cleanups and health camps.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -20,7 +19,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex min-h-screen flex-col">
         <Providers>
           <Navbar />
-          <HashScroller />
           <main className="flex-1">{children}</main>
           <Footer />
         </Providers>

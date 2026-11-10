@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { toast } from "sonner";
 import credits from "@/data/credits.json";
-import Logo from "./Logo";
+import { EVENT_TYPES } from "@/lib/types";
+import { Mail, MapPin, Phone } from "lucide-react";
+import { MarkIcon } from "./Logo";
 import Modal from "./Modal";
 
 const XIcon = () => (
@@ -31,45 +32,31 @@ const LinkedinIcon = () => (
 );
 
 const socials = [
-  { label: "StudioSpace on X", href: "https://x.com", icon: XIcon },
-  { label: "StudioSpace on Instagram", href: "https://instagram.com", icon: InstagramIcon },
-  { label: "StudioSpace on YouTube", href: "https://youtube.com", icon: YoutubeIcon },
-  { label: "StudioSpace on LinkedIn", href: "https://linkedin.com", icon: LinkedinIcon },
-];
-
-const categories = [
-  { label: "Photo Studios", value: "Photo Studio" },
-  { label: "Sound Stages", value: "Film Stage" },
-  { label: "Podcast Rooms", value: "Podcast Lounge" },
-  { label: "Music Suites", value: "Music Suite" },
-  { label: "Art Workshops", value: "Workshop" },
+  { label: "Mohalla on X", href: "https://x.com", icon: XIcon },
+  { label: "Mohalla on Instagram", href: "https://instagram.com", icon: InstagramIcon },
+  { label: "Mohalla on YouTube", href: "https://youtube.com", icon: YoutubeIcon },
+  { label: "Mohalla on LinkedIn", href: "https://linkedin.com", icon: LinkedinIcon },
 ];
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
   const [creditsOpen, setCreditsOpen] = useState(false);
 
-  const subscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      toast.error("Please enter a valid email address.");
-      return;
-    }
-    toast.success("You're on the call sheet. Watch your inbox for new studios.");
-    setEmail("");
-  };
-
   return (
-    <footer className="mt-24 border-t border-line bg-surface2">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
+    <footer className="relative mt-24 overflow-hidden border-t border-line bg-foot text-footink">
+      <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full border-[28px] border-footink/10" />
+      <div aria-hidden className="pointer-events-none absolute -bottom-32 left-1/3 h-80 w-80 rounded-full border-[32px] border-footink/[0.07]" />
+      <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.2fr]">
         <div>
-          <Logo />
-          <p className="mt-4 max-w-sm text-[0.95rem] leading-relaxed text-muted">
-            Our mission is simple: every creator should be able to book the right room by the hour, and every studio owner should be able to keep their space busy.
+          <Link href="/" className="inline-flex items-center gap-2 text-footink" aria-label="Mohalla home">
+            <MarkIcon />
+            <span className="font-display text-[1.45rem] font-semibold tracking-tight">Mohalla</span>
+          </Link>
+          <p className="mt-4 max-w-sm text-[0.95rem] leading-relaxed text-footink/80">
+            Mohalla is where neighbours find each other. Post a clothes drive, a cleanup or a health camp, and see who in your area is ready to show up.
           </p>
           <div className="mt-5 flex gap-2.5">
             {socials.map((s) => (
-              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="grid h-10 w-10 place-items-center rounded-full border border-line bg-surface transition hover:border-accent hover:text-accent">
+              <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="grid h-10 w-10 place-items-center rounded-full border border-footink/30 transition hover:bg-footink hover:text-foot">
                 <s.icon />
               </a>
             ))}
@@ -77,50 +64,46 @@ export default function Footer() {
         </div>
 
         <div>
-          <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.14em]">Quick links</h3>
-          <ul className="space-y-2.5 text-[0.95rem] text-muted">
-            <li><Link className="hover:text-accent" href="/">Home</Link></li>
-            <li><Link className="hover:text-accent" href="/studios">Explore Studios</Link></li>
-            <li><Link className="hover:text-accent" href="/#how-it-works">How It Works</Link></li>
-            <li><Link className="hover:text-accent" href="/#about">About Us</Link></li>
-            <li><Link className="hover:text-accent" href="/add-studio">Host Your Space</Link></li>
+          <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.14em]">Explore</h3>
+          <ul className="space-y-2.5 text-[0.95rem] text-footink/80">
+            <li><Link className="hover:text-footink hover:underline" href="/">Home</Link></li>
+            <li><Link className="hover:text-footink hover:underline" href="/events">Upcoming Events</Link></li>
+            <li><Link className="hover:text-footink hover:underline" href="/create-event">Create Event</Link></li>
+            <li><Link className="hover:text-footink hover:underline" href="/joined-events">Joined Events</Link></li>
           </ul>
         </div>
 
         <div>
-          <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.14em]">Popular categories</h3>
-          <ul className="space-y-2.5 text-[0.95rem] text-muted">
-            {categories.map((c) => (
-              <li key={c.value}>
-                <Link className="hover:text-accent" href={`/studios?category=${encodeURIComponent(c.value)}`}>{c.label}</Link>
-              </li>
+          <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.14em]">Event types</h3>
+          <ul className="space-y-2.5 text-[0.95rem] text-footink/80">
+            {EVENT_TYPES.slice(0, 5).map((t) => (
+              <li key={t}>{t}</li>
             ))}
           </ul>
         </div>
 
         <div>
-          <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.14em]">The call sheet</h3>
-          <p className="mb-3 text-[0.95rem] text-muted">New rooms and host tips, once a month.</p>
-          <form onSubmit={subscribe} className="flex gap-2" noValidate>
-            <label htmlFor="newsletter" className="sr-only">Email address</label>
-            <input id="newsletter" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="field min-w-0 flex-1" />
-            <button type="submit" className="btn btn-primary">Join</button>
-          </form>
+          <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.14em]">Contact</h3>
+          <ul className="space-y-3 text-[0.95rem] text-footink/80">
+            <li className="flex items-start gap-2.5"><MapPin size={18} className="mt-0.5 shrink-0" /> House 14, Road 3, Dhanmondi, Dhaka 1205</li>
+            <li className="flex items-start gap-2.5"><Phone size={18} className="mt-0.5 shrink-0" /> +880 1700 000 214</li>
+            <li className="flex items-start gap-2.5"><Mail size={18} className="mt-0.5 shrink-0" /> hello@mohalla.app</li>
+          </ul>
         </div>
       </div>
 
-      <div className="border-t border-line">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-4 py-5 text-[0.82rem] text-muted sm:flex-row sm:items-center sm:px-6">
-          <p>© 2026 StudioSpace. By using this site you agree to our Terms of Use and Privacy Notice.</p>
-          <button type="button" onClick={() => setCreditsOpen(true)} className="font-semibold underline underline-offset-4 hover:text-accent">
+      <div className="relative border-t border-footink/20">
+        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-3 px-4 py-5 text-[0.82rem] text-footink/80 sm:flex-row sm:items-center sm:px-6">
+          <p>© 2026 Mohalla. By using this site you agree to our Terms of Use and Privacy Notice.</p>
+          <button type="button" onClick={() => setCreditsOpen(true)} className="font-semibold underline underline-offset-4 hover:text-footink">
             Photo credits
           </button>
         </div>
       </div>
 
       <Modal open={creditsOpen} onClose={() => setCreditsOpen(false)} title="Photo credits" wide>
-        <p className="mb-4 text-sm text-muted">Studio photographs come from Wikimedia Commons and are used under the licences shown. Thank you to the photographers.</p>
-        <ul className="space-y-3 text-sm">
+        <p className="mb-4 text-sm text-muted">Event photographs come from Wikimedia Commons and are used under the licences shown. Thank you to the photographers.</p>
+        <ul className="space-y-3 text-sm text-ink">
           {Object.values(credits).map((c) => (
             <li key={c.source} className="rounded-xl border border-line bg-surface2/60 p-3">
               <a href={c.source} target="_blank" rel="noopener noreferrer" className="font-semibold underline underline-offset-2 hover:text-accent">{c.title.replace(/\.(jpe?g|png)$/i, "")}</a>
