@@ -27,7 +27,7 @@ export default function Hero() {
             <Link href="/create-event" className="btn btn-ghost !px-7 !py-3.5">Create an Event</Link>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-3 sm:gap-5" aria-label="Photographs of community service events">
+        <div className="grid grid-cols-3 items-start gap-3 sm:gap-5" aria-label="Photographs of community service events">
           {frames.map((f) => (
             <div key={f.src} className={`overflow-hidden rounded-t-[999px] rounded-b-2xl border border-line bg-surface2 shadow-[var(--shadow)] ${f.cls}`}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
