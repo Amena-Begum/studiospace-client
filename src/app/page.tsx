@@ -1,17 +1,17 @@
-import Categories from "@/components/home/Categories";
-import FeaturedStudios from "@/components/home/FeaturedStudios";
+import Features from "@/components/home/Features";
+import Gallery from "@/components/home/Gallery";
 import Hero from "@/components/home/Hero";
-import HostGuarantee from "@/components/home/HostGuarantee";
-import HowItWorks from "@/components/home/HowItWorks";
+import Newsletter from "@/components/home/Newsletter";
+import RecentEvents from "@/components/home/RecentEvents";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <FeaturedStudios />
-      <Categories />
-      <HowItWorks />
-      <HostGuarantee />
+      <Features />
+      <RecentEvents />
+      <Gallery />
+      <Newsletter />
     </>
   );
 }
